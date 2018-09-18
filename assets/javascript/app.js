@@ -29,7 +29,7 @@ function characters() {
         buttonId: 'character-select-button-1',
         characterId: 1,
         healthPoints: 400,
-        attackPower: 1000,
+        attackPower: 65,
         counterAttack: 45,
         counterAttackPercent: 15
     });
@@ -67,7 +67,7 @@ function characters() {
         buttonId: 'character-select-button-4',
         characterId: 4,
         healthPoints: 300,
-        attackPower: 25,
+        attackPower: 40,
         counterAttack: 40,
         counterAttackPercent: 26
     });
