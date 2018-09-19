@@ -62,10 +62,7 @@ function startNewGame(app) {
 }
 
 function restart(app) {
-    app.characters = characters();
-    $(".character-select-row").empty();
-    hideAllDivs();
-    pageLoad(app);
+    location.reload(true);
 }
 
 function showAlert(message, autoClose, autoCloseTime) {
@@ -265,20 +262,20 @@ function htmlCard(player, buttonSelector) {
 
 function gameLost(app, enemyName) {
     // For now...
-    bootbox.alert({
-        message: "You were defeated by " + enemyName + ". Thanks for playing.",
-        className: 'box-clear-dark'
-    });
-    startOverStatus(app);
+    // bootbox.alert({
+    //     message: "You were defeated by " + enemyName + ". Thanks for playing.",
+    //     className: 'box-clear-dark'
+    // });
+    startOverStatus(app, "You've lost the game.");
 }
 
 function gameWon(app) {
     // For now...
-    bootbox.alert({
-        message: "You won the game. Thanks for playing.",
-        className: 'box-clear-dark'
-    });
-    startOverStatus(app);
+    // bootbox.alert({
+    //     message: "You won the game. Thanks for playing.",
+    //     className: 'box-clear-dark'
+    // });
+    startOverStatus(app, "You've won the game.");
 }
 
 function enemiesLeft(app) {
@@ -291,9 +288,10 @@ function enemiesLeft(app) {
     return enemiesLeft;
 }
 
-function startOverStatus(app) {
+function startOverStatus(app, message) {
     displayDiv("#attack-button-div", 0);
     displayDiv("#player1-start-over-div", 1);
+    $("#player1-start-over-div p").text(message);
     $("#" + app.currentMessageId).alert('close');
 }
 
@@ -303,9 +301,9 @@ function gameStatusCheck(app) {
         gameWon(app);
     } else if(app.characters[app.player1Key].healthPoints <= 0) {
         gameLost(app);
-    } else {
+    } else if(app.characters[app.player2Key].healthPoints <= 0) {
         bootbox.alert({
-            message: "You have defeated " + app.characters[app.player2Key].name,
+            message: "You have defeated " + app.characters[app.player2Key].name + ". Please choose another enemy.",
             className: 'box-clear-dark'
         });        
     }
@@ -373,6 +371,13 @@ function attack(app, players) {
         showAlert("Select an enemy before attacking.", 1, 2500); 
         $("#enemy-select-row-container").slideDown(350);
     }
+}
+
+var attackBtnAction = function(btn, status, message) {
+    displayDiv("#player1-attack-div", btn);
+    displayDiv("#player1-attack-status-div", status);
+    $("#player1-attack-status-text").text(message);
+    
 }
 
 function actionCard() {
